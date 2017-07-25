@@ -5,8 +5,6 @@
 ## 目录
 
 1. [命名规范](#nameming-conventions)
-1. [命名规范](#nameming-conventions)
-1. [命名规范](#nameming-conventions)
 
 ## 命名
 
