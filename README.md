@@ -6,6 +6,7 @@
 
 1. [命名规范](#命名)
 1. [变量声明]（#变量声明）
+1. [对象](#object)
 
 ## 命名
  - 不要使用单个字母、拼音或者无意义的单词作为变量名。
@@ -18,6 +19,7 @@
         - 逻辑：bXXX，如：bChecked，·bHasLogin；
         - 数组：aXXX，如：aList，aGroup；
         - 正则：rXXX，如：rDomain，rEmail
+        - JQurey实例：$XXX,如$panel,$navBar
  - 使用驼峰命名法来命名对象、函数以及变量.
 
 ```javascript
@@ -170,6 +172,19 @@
 }
 ```
 **[⬆ back to top](#目录)**
+
+## 对象
+- 使用字面量来声明对象
+ ```javascript
+    // bad
+    const item = new Object();
+
+    // good
+    const item = {};
+ ```
+
+
+
 
 
 
