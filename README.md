@@ -6,7 +6,8 @@
 
 1. [命名规范](#命名)
 1. [变量声明]（#变量声明）
-1. [对象](#object)
+1. [对象](#对象)
+1. [数组](#数组)
 
 ## 命名
  - 不要使用单个字母、拼音或者无意义的单词作为变量名。
@@ -203,7 +204,7 @@
     };
 ```
 - 使用属性缩写，并且把属性缩写放在对象声明最开头
-  ```javascript
+```javascript
     const anakinSkywalker = 'Anakin Skywalker';
     const lukeSkywalker = 'Luke Skywalker';
 
@@ -227,8 +228,10 @@
       mayTheFourth: 4,
     };
 ```
+
 - 对象的key不要用引号，key中含有非法字符的情况除外
  >why 这样提高了代码的可能性，js引擎也更容易优化该段代码
+
 ```javascript
     // bad
     const bad = {
@@ -263,7 +266,77 @@
 ```
 **[⬆ back to top](#目录)**
 
+## 数组
+- 在数组末尾插入新元素时，用push方法。
+```javascript
+    const someStack = [];
 
+    // bad
+    someStack[someStack.length] = 'abracadabra';
+
+    // good
+    someStack.push('abracadabra');
+```
+- 和对象一样，使用数组的展开操作符"..."来拷贝数组
+ ```javascript
+    // bad
+    const len = items.length;
+    const itemsCopy = [];
+    let i;
+
+    for (i = 0; i < len; i += 1) {
+      itemsCopy[i] = items[i];
+    }
+
+    // good
+    const itemsCopy = [...items];
+```
+- 将类数组对象，例如nodeList HTMLollection等转化为数组时，使用[Array.from](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
+ 
+>是时候该丢弃繁琐的`Array.prototype.slice.call`了！
+ 
+ ```javascript
+    const foo = document.querySelectorAll('.foo');
+    const nodes = Array.from(foo);
+ ```
+- 使用数组方法时，传入的函数callback一定要有返回值。例如Array的reduce，map，filter方法
+ ```javascript
+     // bad
+    const flat = {};
+    [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
+      const flatten = memo.concat(item);
+      flat[index] = flatten;
+    });
+
+    // good
+    const flat = {};
+    [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
+      const flatten = memo.concat(item);
+      flat[index] = flatten;
+      return flatten;
+    });
+
+    // bad
+    inbox.filter((msg) => {
+      const { subject, author } = msg;
+      if (subject === 'Mockingbird') {
+        return author === 'Harper Lee';
+      } else {
+        return false;
+      }
+    });
+
+    // good
+    inbox.filter((msg) => {
+      const { subject, author } = msg;
+      if (subject === 'Mockingbird') {
+        return author === 'Harper Lee';
+      }
+
+      return false;
+    });
+ ```
+**[⬆ back to top](#目录)**
 
 
 
