@@ -182,7 +182,86 @@
     // good
     const item = {};
  ```
+- 对象方法定义，统一使用mehtod缩写
+```javascript
+    // bad
+    const atom = {
+      value: 1,
 
+      addValue: function (value) {
+        return atom.value + value;
+      },
+    };
+
+    // good
+    const atom = {
+      value: 1,
+
+      addValue(value) {
+        return atom.value + value;
+      },
+    };
+```
+- 使用属性缩写，并且把属性缩写放在对象声明最开头
+  ```javascript
+    const anakinSkywalker = 'Anakin Skywalker';
+    const lukeSkywalker = 'Luke Skywalker';
+
+    // bad
+    const obj = {
+      episodeOne: 1,
+      twoJediWalkIntoACantina: 2,
+      lukeSkywalker,
+      episodeThree: 3,
+      mayTheFourth: 4,
+      anakinSkywalker,
+    };
+
+    // good
+    const obj = {
+      lukeSkywalker,
+      anakinSkywalker,
+      episodeOne: 1,
+      twoJediWalkIntoACantina: 2,
+      episodeThree: 3,
+      mayTheFourth: 4,
+    };
+```
+- 对象的key不要用引号，key中含有非法字符的情况除外
+ >why 这样提高了代码的可能性，js引擎也更容易优化该段代码
+```javascript
+    // bad
+    const bad = {
+      'foo': 3,
+      'bar': 4,
+      'data-blah': 5,
+    };
+
+    // good
+    const good = {
+      foo: 3,
+      bar: 4,
+      'data-blah': 5,
+    };
+```
+- 多使用ES6的对象展开操作符`...`,来实现对象的浅复制，解构赋值等功能。
+```javascript
+    // very bad
+    const original = { a: 1, b: 2 };
+    const copy = Object.assign(original, { c: 3 }); // this mutates `original` ಠ_ಠ
+    delete copy.a; // so does this
+
+    // bad
+    const original = { a: 1, b: 2 };
+    const copy = Object.assign({}, original, { c: 3 }); // copy => { a: 1, b: 2, c: 3 }
+
+    // good
+    const original = { a: 1, b: 2 };
+    const copy = { ...original, c: 3 }; // copy => { a: 1, b: 2, c: 3 }
+
+    const { a, ...noA } = copy; // noA => { b: 2, c: 3 }
+```
+**[⬆ back to top](#目录)**
 
 
 
