@@ -5,22 +5,24 @@
 ## 目录
 
 1. [命名规范](#命名)
-1. [变量声明]（#变量声明）
+1. [变量声明](#变量声明)
 1. [对象](#对象)
 1. [数组](#数组)
+1. [字符串](#字符串)
+1. [函数](#函数)
 
 ## 命名
  - 不要使用单个字母、拼音或者无意义的单词作为变量名。
     1. 函数命名
-        - 普通函数采用动词+名词的方式，如getList，getVersion等
-        - 返回值为bool类型，采用is、has、can开头，如：isAdmin，hasChild；
+        - 普通函数采用动词+名词的方式，如`getList，getVersion`等
+        - 返回值为bool类型，采用`is,has,can`开头，如：`isAdmin，hasChild`；
     1. 变量命名，应采用类型前缀+有意义的单词(具体规则待定)，比如：
-        - 字符串：sXXX，如：sName，sHtml；
-        - 数字：nXXX，如：nPage，nTotal；
-        - 逻辑：bXXX，如：bChecked，·bHasLogin；
-        - 数组：aXXX，如：aList，aGroup；
-        - 正则：rXXX，如：rDomain，rEmail
-        - JQurey实例：$XXX,如$panel,$navBar
+        - 字符串：sXXX，如：`sName，sHtml`；
+        - 数字：nXXX，如：`nPage，nTotal`；
+        - 逻辑：bXXX，如：`bChecked，·bHasLogin`；
+        - 数组：aXXX，如：`aList，aGroup`；
+        - 正则：rXXX，如：`rDomain，rEmail`
+        - JQurey实例：$XXX,如`$panel,$navBar`
  - 使用驼峰命名法来命名对象、函数以及变量.
 
 ```javascript
@@ -183,7 +185,7 @@
     // good
     const item = {};
  ```
-- 对象方法定义，统一使用mehtod缩写
+- 对象方法定义，统一使用method缩写
 ```javascript
     // bad
     const atom = {
@@ -337,6 +339,158 @@
     });
  ```
 **[⬆ back to top](#目录)**
+
+## 字符串
+- 用单引号`''`来括起字符串，而不是双引号`""`,如果字符串中包含变量或者折行，则应使用模板字符串
+
+```javascript
+    // bad
+    const name = "Capt. Janeway";
+
+    // bad - template literals should contain interpolation or newlines
+    const name = `Capt. Janeway`;
+
+    // good
+    const name = 'Capt. Janeway';
+```
+- 当字符串是动态构建时，使用模板字符串来代替`+`号连接
+```javascript
+    // bad
+    function sayHi(name) {
+      return 'How are you, ' + name + '?';
+    }
+
+    // bad es5推荐此方法，但是兄弟，现在是es6
+    function sayHi(name) {
+      return ['How are you, ', name, '?'].join();
+    }
+
+    // bad 空格问题
+    function sayHi(name) {
+      return `How are you, ${ name }?`;
+    }
+
+    // good
+    function sayHi(name) {
+      return `How are you, ${name}?`;
+    }
+```
+**[⬆ back to top](#目录)**
+
+## 函数
+- 使用命名的函数表达式来定义函数。不要使用函数声明，因为变量提升会影响可读性。记得给函数命名，方便在报错的时候定位错误
+
+```javascript
+    // bad
+    function foo() {
+      // ...
+    }
+
+    // bad
+    const foo = function () {
+      // ...
+    };
+
+    // good
+    const foo = function bar() {
+      // ...
+    };
+```
+- 立即执行函数表达式(IIFE)，统一采用括号包起来的格式
+ >虽然IIFE有多种写法，但是括号包起来更能够体现它的模块性质。但是，现在module这么方便，IIFE基本用不着了。
+
+```javascript
+    // immediately-invoked function expression (IIFE)
+    (function () {
+      console.log('Welcome to the Internet. Please follow me.');
+    }());
+```
+- 不要在non-function的块级作用域（`if`,`while`,etc)使用函数声明。请使用变量来定义一个函数。
+ >一方面是变量提升，一方面是因为各浏览器对该写法的解析有差异。
+```javascript
+    // bad stupid
+    if (currentUser) {
+      function test() {
+        console.log('Nope.');
+      }
+    }
+
+    // good
+    let test;
+    if (currentUser) {
+      test = () => {
+        console.log('Yup.');
+      };
+    }
+```
+- 不要使用`arguments`来定义一个形参，这会覆盖函数内部的`arguments`。当然，ES6以后，`arguments`也不推荐使用了，请用`...`剩余参数来替换。
+```javascript
+    // bad 
+    function foo(name, options, arguments) {
+      // ...
+    }
+
+    // good
+    function foo(name, options, args) {
+      // ...
+    }
+   // bad
+    function concatenateAll() {
+      const args = Array.prototype.slice.call(arguments);
+      return args.join('');
+    }
+
+    // good
+    function concatenateAll(...args) {
+      return args.join('');
+    }
+```
+- 使用默认参数，并且总是把默认参数放在最后面
+```javascript
+    // really bad 没有必要这样了
+    function handleThings(opts) {
+      opts = opts || {};
+      // ...
+    }
+
+    // good
+    function handleThings(opts = {}) {
+      // ...
+    }
+    // bad
+    function handleThings(opts = {}, name) {
+      // ...
+    }
+    // good
+    function handleThings(name, opts = {}) {
+      // ...
+    }
+```
+- 不要使用`Function`构造函数来创建一个新的`function`
+  >类似于eval(),这是特别脆弱的语法。
+  ```javascript
+    // bad
+    var add = new Function('a', 'b', 'return a + b');
+
+    // still bad
+    var subtract = Function('a', 'b', 'return a - b');
+```
+- 不要重新给函数参数赋值。
+ > 重新赋值可能会产生意料之外的错误，尤其是当你访问`arguments`对象时，并且这样容易产生性能问题。
+```javascript
+  // bad
+    function f1(a) {
+      a = 1;
+      // ...
+    }
+  // good 
+  function f3(a) {
+      const b = a || 1;
+      // ...
+    }
+```
+
+
 
 
 
