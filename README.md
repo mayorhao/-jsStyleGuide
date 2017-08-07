@@ -1,16 +1,20 @@
  搜狐媒体平台前端组代码规范（ES6）
 
-*说明：本规范遵循[aribnb style guide](https://github.com/airbnb/javascript),组内同学务必遵守,ES6语法可参考[ECMAscript6入门](http://es6.ruanyifeng.com/)*
+*说明：本规范遵循[aribnb style guide](https://github.com/airbnb/javascript),ES6语法可参考[ECMAscript6入门](http://es6.ruanyifeng.com/)*
 <!-- TOC -->
 
 - [命名](#命名)
 - [变量声明](#变量声明)
 - [对象](#对象)
 - [数组](#数组)
-- [[类和构造函数](id:class)](#类和构造函数idclass)
-- [[变量与属性](id:variable-property)](#变量与属性idvariable-property)
-- [[比较操作](id:comparison)](#比较操作idcomparison)
-- [[空格](id:space)](#空格idspace)
+- [类和构造函数](#类和构造函数)
+- [变量与属性](#变量与属性)
+- [比较操作](#比较操作)
+- [空格](#空格)
+- [块状作用域](#块状作用域)
+- [条件语句](#条件语句)
+- [分号与逗号](#分号与逗号)
+- [说明](#说明)
 
 <!-- /TOC -->
 ## 命名
@@ -539,7 +543,7 @@
 ```
 **[⬆ back to top](#目录)**
 
-## [类和构造函数](id:class)
+## 类和构造函数
 
 1. 优先使用`class`，避免使用原型`prototype`
 
@@ -591,7 +595,7 @@
 		}
 ```
 **[⬆ back to top](#目录)**
-## [变量与属性](id:variable-property)
+## 变量与属性
 
 1. 优先使用`.`号访问对象属性
 
@@ -649,7 +653,7 @@
 		let length;
 ```
 
-## [比较操作](id:comparison)
+## 比较操作
 
 1. 优先使用`===`和`!==`，而不是`==`和`!=`
 1. 简写判断`boolean`类型值，而明确比较字符串和数字值
@@ -696,7 +700,7 @@
 		const baz = !c;
 ```
 **[⬆ back to top](#目录)**
-## [空格](id:space)
+## 空格
 
 1. 使用4个空格缩进
 ```javascript	
@@ -770,4 +774,274 @@
 		// good
 		const x = y + 5;
 ```
+1. 链式调用,在行首使用`.`符号(leading dot)，来明显的强调这一行是一个方法调用。
+```javascript
+    // bad
+    $('#items').find('.selected').highlight().end().find('.open').updateCount();
+
+    // bad
+    $('#items').
+      find('.selected').
+        highlight().
+        end().
+      find('.open').
+        updateCount();
+
+    // good
+    $('#items')
+      .find('.selected')
+        .highlight()
+        .end()
+      .find('.open')
+        .updateCount();
+
+    // bad
+    const leds = stage.selectAll('.led').data(data).enter().append('svg:svg').classed('led', true)
+        .attr('width', (radius + margin) * 2).append('svg:g')
+        .attr('transform', `translate(${radius + margin},${radius + margin})`)
+        .call(tron.led);
+
+    // good
+    const leds = stage.selectAll('.led')
+        .data(data)
+      .enter().append('svg:svg')
+        .classed('led', true)
+        .attr('width', (radius + margin) * 2)
+      .append('svg:g')
+        .attr('transform', `translate(${radius + margin},${radius + margin})`)
+        .call(tron.led);
+
+    // good
+    const leds = stage.selectAll('.led').data(data);
+```
+1. 在块状语句后,加一个空行
+```javascript
+    // bad
+    if (foo) {
+      return bar;
+    }
+    return baz;
+
+    // good
+    if (foo) {
+      return bar;
+    }
+
+    return baz;
+
+    // bad
+    const obj = {
+      foo() {
+      },
+      bar() {
+      },
+    };
+    return obj;
+
+    // good
+    const obj = {
+      foo() {
+      },
+
+      bar() {
+      },
+    };
+
+    return obj;
+
+    // bad
+    const arr = [
+      function foo() {
+      },
+      function bar() {
+      },
+    ];
+    return arr;
+
+    // good
+    const arr = [
+      function foo() {
+      },
+
+      function bar() {
+      },
+    ];
+
+    return arr;
+```
+1. 在*括号*以及*方括号*内都不要加空格，在花括号内加入空格。
+```javascript
+    // bad
+    if ( foo ) {
+      console.log(foo);
+    }
+
+    // good
+    if (foo) {
+      console.log(foo);
+    }
+     // good
+    const foo = [1, 2, 3];
+    console.log(foo[0]);
+   // bad
+    const foo = {clark: 'kent'};
+    // good
+    const foo = { clark: 'kent' };
+```
 **[⬆ back to top](#目录)**
+
+
+## 块状作用域
+- 多行的块代码，用括号包起来
+
+```javascript
+    // bad
+    if (test)
+      return false;
+
+    // good
+    if (test) return false;
+
+    // good
+    if (test) {
+      return false;
+    }
+
+    // bad
+    function foo() { return false; }
+
+    // good
+    function bar() {
+      return false;
+    }
+```
+- 如果是`if-else`语句。则将`else`和`if`放在同一行
+```javascript
+    // bad
+    if (test) {
+      thing1();
+      thing2();
+    }
+    else {
+      thing3();
+    }
+
+    // good
+    if (test) {
+      thing1();
+      thing2();
+    } else {
+      thing3();
+    }
+```
+**[⬆ back to top](#目录)**
+
+## 条件语句
+- 如果`if`或者`while`中条件语句太长的话，那么你应该新起一行，分多行来写，逻辑操作符`&&`统一写在行首或者行尾都可以。
+
+```javascript
+    // bad
+    if ((foo === 123 || bar === 'abc') && doesItLookGoodWhenItBecomesThatLong() && isThisReallyHappening()) {
+      thing1();
+    }
+
+    // bad
+    if (foo === 123 &&
+      bar === 'abc') {
+      thing1();
+    }
+
+    // bad
+    if (foo === 123
+      && bar === 'abc') {
+      thing1();
+    }
+
+    // good
+    if (
+      (foo === 123 || bar === "abc") &&
+      doesItLookGoodWhenItBecomesThatLong() &&
+      isThisReallyHappening()
+    ) {
+      thing1();
+    }
+
+    // good
+    if (foo === 123 && bar === 'abc') {
+      thing1();
+    }
+
+    // good
+    if (
+      foo === 123 &&
+      bar === 'abc'
+    ) {
+      thing1();
+    }
+
+    // good
+    if (
+      foo === 123
+      && bar === 'abc'
+    ) {
+      thing1();
+    }
+```
+## 分号与逗号
+- 在尾部增加额外的逗号。但是如果最后是带`...`展开操作符的元素，就不要加尾部的逗号了。
+> why?这样会在git diff时显示的更为清楚。babel会在编译时移除这个额外的逗号，所以，不用担心这个有关[尾部逗号bug](https://github.com/airbnb/javascript/blob/es5-deprecated/es5/README.md#commas)的问题
+
+```javascript
+    // bad
+    const hero = {
+      firstName: 'Dana',
+      lastName: 'Scully'
+    };
+
+    const heroes = [
+      'Batman',
+      'Superman'
+    ];
+    // good
+    const hero = {
+      firstName: 'Dana',
+      lastName: 'Scully',
+    };
+
+    const heroes = [
+      'Batman',
+      'Superman',
+    ];
+    //bad 
+    createHero(
+      firstName,
+      lastName,
+      inventorOf,
+      ...heroArgs,
+    );
+    //good
+    createHero(
+      firstName,
+      lastName,
+      inventorOf,
+      ...heroArgs
+    );
+```
+- 我们这里分号是要写的。
+```javascript
+    // bad
+    (function () {
+      const name = 'Skywalker'
+      return name
+    })()
+
+    // good
+    (function () {
+      const name = 'Skywalker';
+      return name;
+    }());
+``` 
+**[⬆ back to top](#table-of-contents)**
+
+## 说明
+本规范大部分基于[aribnb style guide](https://github.com/airbnb/javascript)。有些地方加入了自己的想法。此为初稿，欢迎大家积极提出意见，也请在搬砖时遵循此代码的风格约定。
