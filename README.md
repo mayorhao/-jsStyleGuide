@@ -484,9 +484,7 @@ var add = new Function('a', 'b', 'return a + b');
 var subtract = Function('a', 'b', 'return a - b');
 ```
 - 不要重新给函数参数赋值。
-
 > 重新赋值可能会产生意料之外的错误，尤其是当你访问`arguments`对象时，并且这样容易产生性能问题。
-
 ```javascript
 // bad
 function f1(a) {
@@ -625,7 +623,6 @@ const superPower = new SuperPower();
 1. 一个语句定义一个变量或常量
 
 ```javascript	
-
 // bad
 const items = getItems(),
     goSportsTeam = true,
