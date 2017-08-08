@@ -22,10 +22,10 @@
 <!-- /TOC -->
 ## 命名
 - 不要使用单个字母、拼音或者无意义的单词作为变量名。
-  1. 函数命名
+  - 函数命名
     - 普通函数采用动词+名词的方式，如`getList，getVersion`等
     - 返回值为bool类型，采用`is,has,can`开头，如：`isAdmin，hasChild`；
-  2. 变量命名，应采用类型前缀+有意义的单词(具体规则待定)，比如：
+  - 变量命名，应采用类型前缀+有意义的单词(具体规则待定)，比如：
     - 字符串：sXXX，如：`sName，sHtml`；
     - 数字：nXXX，如：`nPage，nTotal`；
     - 逻辑：bXXX，如：`bChecked，·bHasLogin`；
