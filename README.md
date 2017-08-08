@@ -21,10 +21,10 @@
 <!-- /TOC -->
 ## 命名
 - 不要使用单个字母、拼音或者无意义的单词作为变量名。
-1. 函数命名
+  1. 函数命名
     - 普通函数采用动词+名词的方式，如`getList，getVersion`等
     - 返回值为bool类型，采用`is,has,can`开头，如：`isAdmin，hasChild`；
-1. 变量命名，应采用类型前缀+有意义的单词(具体规则待定)，比如：
+  2. 变量命名，应采用类型前缀+有意义的单词(具体规则待定)，比如：
     - 字符串：sXXX，如：`sName，sHtml`；
     - 数字：nXXX，如：`nPage，nTotal`；
     - 逻辑：bXXX，如：`bChecked，·bHasLogin`；
@@ -547,7 +547,7 @@ var named = function named() {
 
 ## 类和构造函数
 
-1. 优先使用`class`，避免使用原型`prototype`
+- 优先使用`class`，避免使用原型`prototype`
 
 
 ```javascript		
@@ -574,7 +574,7 @@ class Queue {
 }
 ```
 
-1. 继承优先使用`extends`
+- 继承优先使用`extends`
 
 ```javascript	
 
@@ -598,7 +598,7 @@ class PeekableQueue extends Queue {
 **[⬆ back to top](#目录)**
 ## 变量与属性
 
-1. 优先使用`.`号访问对象属性
+- 优先使用`.`号访问对象属性
 
 ```javascript	
 
@@ -608,7 +608,7 @@ const isJedi = luke['jedi'];
 // good
 const isJedi = luke.jedi;
 ```
-1. 使用`const`和`let`定义常量和变量
+- 使用`const`和`let`定义常量和变量
 
 ```javascript	
 
@@ -620,7 +620,7 @@ var superPower = new SuperPower();
 // good
 const superPower = new SuperPower();
 ```
-1. 一个语句定义一个变量或常量
+- 一个语句定义一个变量或常量
 
 ```javascript	
 // bad
@@ -634,7 +634,7 @@ const goSportsTeam = true;
 const dragonball = 'z';
 ```
 
-1. 常量总是定义在变量前面
+- 常量总是定义在变量前面
 
 ```javascript	
 
@@ -655,8 +655,8 @@ let length;
 
 ## 比较操作
 
-1. 优先使用`===`和`!==`，而不是`==`和`!=`
-1. 简写判断`boolean`类型值，而明确比较字符串和数字值
+- 优先使用`===`和`!==`，而不是`==`和`!=`
+- 简写判断`boolean`类型值，而明确比较字符串和数字值
 
 ```javascript	
 
@@ -686,7 +686,7 @@ if (collection.length > 0) {
     // ...
 }
 ```
-1. 避免使用三元运算符
+- 避免使用三元运算符
 ```javascript	
 
 // bad
@@ -702,7 +702,7 @@ const baz = !c;
 **[⬆ back to top](#目录)**
 ## 空格
 
-1. 使用4个空格缩进
+- 使用4个空格缩进
 ```javascript	
 
 // bad
@@ -715,7 +715,7 @@ function baz() {
 ∙∙∙∙let name;
 }
 ```
-1. 在花括号前添加一个空格
+- 在花括号前添加一个空格
 
 ```javascript	
 
@@ -741,7 +741,7 @@ dog.set('attr', {
     breed: 'Bernese Mountain Dog',
 });
 ```
-1. 在控制语句括号前后各添加一个空格
+- 在控制语句括号前后各添加一个空格
 
 ```javascript	
 // bad
@@ -764,7 +764,7 @@ function fight() {
     console.log('Swooosh!');
 }
 ```
-1. 在操作符前后各添加一个空格
+- 在操作符前后各添加一个空格
 
 ```javascript	****
 
@@ -774,7 +774,7 @@ const x=y+5;
 // good
 const x = y + 5;
 ```
-1. 链式调用,在行首使用`.`符号(leading dot)，来明显的强调这一行是一个方法调用。
+- 链式调用,在行首使用`.`符号(leading dot)，来明显的强调这一行是一个方法调用。
 ```javascript
 // bad
 $('#items').find('.selected').highlight().end().find('.open').updateCount();
@@ -814,7 +814,7 @@ const leds = stage.selectAll('.led')
 // good
 const leds = stage.selectAll('.led').data(data);
 ```
-1. 在块状语句后,加一个空行
+- 在块状语句后,加一个空行
 ```javascript
 // bad
 if (foo) {
@@ -869,7 +869,7 @@ const arr = [
 
 return arr;
 ```
-1. 在*括号*以及*方括号*内都不要加空格，在花括号内加入空格。
+- 在*括号*以及*方括号*内都不要加空格，在花括号内加入空格。
 ```javascript
 // bad
 if ( foo ) {
