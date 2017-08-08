@@ -17,6 +17,7 @@
 - [条件语句](#条件语句)
 - [分号与逗号](#分号与逗号)
 - [写在最后](#写在最后)
+- [Todo list](#Todo list)
 
 <!-- /TOC -->
 ## 命名
@@ -1045,3 +1046,6 @@ createHero(
 
 ## 写在最后
 本规范大部分基于[aribnb style guide](https://github.com/airbnb/javascript)。有些地方加入了自己的想法。此为初稿，欢迎大家积极提出意见，也请在搬砖时遵循此代码的风格约定。
+## Todo list
+1. 代码注释规范。涉及注释的时机，注释的规范化等
+1. 高性能代码tips，涉及dom操作、浏览器重排等知识点。可参考《高性能javascript》
